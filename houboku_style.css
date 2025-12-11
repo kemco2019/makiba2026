@@ -1,0 +1,145 @@
+body{
+    background-image: url("img/back_mita.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+.back-switch{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#back-text{
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: #001E62;
+    /* -webkit-text-stroke: 0.8px #FFF; */
+}
+.back-btn{
+    display: flex;
+    text-align: center;
+}
+#btn0{
+    width: 100px;
+    height: 60px;
+    margin-left: 20px;
+    background:#F1C400;
+    color: #001E62;
+    border-color: #001E62;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.field{
+    display: flex;
+    position: absolute;
+    bottom: 0;
+}
+.horse {
+    display: flex;
+    flex-flow: column;
+    position: absolute;
+    bottom: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+.horse-img{
+    height: 20vh;
+    width: auto;
+    z-index: 0;
+}
+.bubble {
+    display: none;
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+}
+.horse:hover .bubble {
+    display: block;
+    z-index: 10;
+}
+
+
+/* 馬のアニメーション */
+@keyframes walk-right {
+    0% { transform: translateX(-200px); }
+    100% { transform: translateX(100vw); }
+}
+@keyframes walk-left {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-200px); }
+}
+.walk-right {
+    animation: walk-right 60s linear infinite;
+}
+.walk-left {
+    animation: walk-left 60s linear infinite;
+}
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(2deg); }
+    50% { transform: rotate(-2deg); }
+    75% { transform: rotate(1deg); }
+    100% { transform: rotate(0deg); }
+}
+.shake {
+    animation: shake 0.3s infinite;
+    height: 30vh;
+    width: auto;
+}
+
+/* エフェクト */
+.effect {
+    position: absolute;
+    pointer-events: none;
+    animation: fadeUp 0.8s ease-out forwards;
+    font-size: 30px;
+    z-index: 9999;
+}
+.heart {
+    position: absolute;
+    font-size: 30px;
+    z-index: 9999;
+}
+@keyframes fadeUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-40px); }
+}
+
+
+/* モーダル (現時点使用していない) */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    width: 600px;
+}
+.modal-content img {
+    width: 500px;
+    height: auto;
+}
+#close-btn {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    font-size: 40px;
+    cursor: pointer;
+}
