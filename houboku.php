@@ -100,7 +100,7 @@ if (isset($_GET['ajax'])) {
         for ($i=0; $i < count($horses); $i++){ ?>
             <div class="horse
             <?php echo ($horses[$i]['lfrt'] === 0 ? 'walk-left' : 'walk-right'); ?>"
-            style="left:<?php echo rand(0, 100); ?>vw; bottom:<?php echo rand(0, 100); ?>px;"
+            style="left:<?php echo rand(-100, 100); ?>vw; bottom:<?php echo rand(0, 15); ?>vh;"
             data-name="<?php echo htmlspecialchars($horses[$i]['name']); ?>"
             data-img="<?php echo htmlspecialchars($horses[$i]['path']); ?>" 
             data-comment="<?php echo htmlspecialchars($horses[$i]['cmt']); ?>">

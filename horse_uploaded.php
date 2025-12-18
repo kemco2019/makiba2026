@@ -9,8 +9,8 @@
 </div>
 
 <!--送信ボタンが押された場合-->
-<?php if (isset($_POST['upload']) && !empty($_FILES['image']['name'])): ?>
 <?php 
+if (isset($_POST['upload']) && !empty($_FILES['image']['name']) && !empty($_POST["name"])): 
     $host = "mysql80.kemco.sakura.ne.jp";
     $dbName = "kemco_uma2026";
     $username = "kemco_uma2026";
@@ -22,10 +22,6 @@
         echo $e->getMessage();
     }
 
-    if (is_null($_FILES["image"])){
-        echo "error: nullです";
-        $message = '画像が選択されていません。';
-    }else{
         $name = $_POST["name"];
         $cmt = $_POST["cmt"];
         $lfrt = $_POST["lfrt"];
@@ -39,33 +35,35 @@
         switch ($fileExtension) {
             case 'png':
                 $img = imagecreatefrompng($fileTmpName);
-                break;
-            default:
-                $message = '対応していない画像形式です。';
-                break;
-        }
-        switch ($fileExtension) {
-            case 'png':
                 imagesavealpha($img, TRUE);
                 imagepng($img, $file);
+                imagedestroy($img); //メモリ解放
+
+                $sql = "INSERT INTO horse (path, name, cmt, lfrt) VALUES (:path, :name, :cmt, :lfrt)";
+                $stmt = $dbh->prepare($sql);
+                $stmt->bindValue(':path', $file, PDO::PARAM_STR);
+                $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+                $stmt->bindValue(':cmt', $cmt, PDO::PARAM_STR);
+                $stmt->bindValue(':lfrt', $lfrt, PDO::PARAM_STR);
+                $stmt->execute();
+                
+                $message = 'アップロードが完了しました！';                        
                 break;
             default:
+                $message = 'エラー：画像形式がpngでありません。';
                 break;
         }
-        imagedestroy($img); //メモリ解放
 
-        $sql = "INSERT INTO horse (path, name, cmt, lfrt) VALUES (:path, :name, :cmt, :lfrt)";
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(':path', $file, PDO::PARAM_STR);
-        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
-        $stmt->bindValue(':cmt', $cmt, PDO::PARAM_STR);
-        $stmt->bindValue(':lfrt', $lfrt, PDO::PARAM_STR);
-        $stmt->execute();
-        $message = 'アップロードが完了しました';
-    }
-    echo '<div class="text">';
-    echo $message;
-    echo '</div>';
+elseif(empty($_FILES['image']['name'])):
+    $message = 'エラー：画像が選択されていません。';
+elseif(empty($_POST["name"])):
+    $message = 'エラー：名前が入力されていません。';
+else:
+    $message = 'アップロードエラー';
+endif;
+
+echo '<div class="text">';
+echo $message;
+echo '</div>';
 ?>
-<?php endif;?>
 <a href="horse_upload.php" class="btn">戻る</a>
