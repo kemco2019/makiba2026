@@ -2,7 +2,6 @@ body{
     background-image: url("img/back_mita.png");
     background-repeat: no-repeat;
     background-size: cover;
-    overflow: hidden;
 }
 .back-switch{
     display: flex;
@@ -96,9 +95,13 @@ body{
 .effect {
     position: absolute;
     pointer-events: none;
-    animation: fadeUp 0.8s ease-out forwards;
+    animation: fadeUp 2.0s ease-out forwards;
     font-size: 30px;
     z-index: 9999;
+}
+.effect img {
+    width: 100px;
+    height: auto;
 }
 .heart {
     position: absolute;
